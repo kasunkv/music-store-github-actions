@@ -24,4 +24,4 @@ jobs:
     - name: Build with dotnet
       run: dotnet build src/MusicStore/MusicStore.Web/*.csproj --configuration Release
     - name: Run Unit Tests
-      run: dotnet test
+      run: dotnet test src\MusicStore\UnitTests\**\*.Tests.csproj
