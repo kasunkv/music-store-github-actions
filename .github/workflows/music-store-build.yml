@@ -30,7 +30,7 @@ jobs:
       run: dotnet test src/MusicStore/UnitTests/MusicStore.Services.Tests/MusicStore.Services.Tests.csproj
       
     - name: Publish Web App
-      run: dotnet publish src/MusicStore/MusicStore.Web/*.csproj --configuration Release --verbosity detailed --outout src/artifact/
+      run: dotnet publish src/MusicStore/MusicStore.Web/*.csproj --configuration Release --verbosity detailed --output src/artifact/
     
     #- name: Upload artifact
     #  uses: actions/upload-artifact@v1.0.0
