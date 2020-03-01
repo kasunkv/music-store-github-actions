@@ -25,3 +25,8 @@ jobs:
       run: dotnet build src/MusicStore/MusicStore.Web/*.csproj --configuration Release
     - name: Run Unit Tests
       run: dotnet test src/MusicStore/UnitTests/MusicStore.Services.Tests/MusicStore.Services.Tests.csproj
+    - name: Upload artifact
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        name: Web
+        path: ${{GITHUB_WORKSPACE}}/src/MusicStore/MusicStore.Web/bin/Release/netcoreapp3.1/
