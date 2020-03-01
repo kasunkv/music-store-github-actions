@@ -28,6 +28,9 @@ jobs:
     
     - name: Run Unit Tests
       run: dotnet test src/MusicStore/UnitTests/MusicStore.Services.Tests/MusicStore.Services.Tests.csproj
+      
+    - name: Publish Web App
+      run: dotnet publish src/MusicStore/MusicStore.Web/*.csproj --configuration Release --verbosity detailed --outout src/artifact/
     
     #- name: Upload artifact
     #  uses: actions/upload-artifact@v1.0.0
@@ -44,4 +47,4 @@ jobs:
       uses: Azure/webapps-deploy@v2
       with:
         app-name: music-store-gh
-        package: src/MusicStore/MusicStore.Web/bin/Release/netcoreapp3.1/
+        package: src/artifact/
