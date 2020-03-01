@@ -17,16 +17,33 @@ jobs:
     steps:
     - name: Checkout Code
       uses: actions/checkout@v2
+      
     - name: Setup .NET Core 3.1.102
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.102
+        
     - name: Build with dotnet
       run: dotnet build src/MusicStore/MusicStore.Web/*.csproj --configuration Release
+    
     - name: Run Unit Tests
       run: dotnet test src/MusicStore/UnitTests/MusicStore.Services.Tests/MusicStore.Services.Tests.csproj
-    - name: Upload artifact
-      uses: actions/upload-artifact@v1.0.0
+    
+    #- name: Upload artifact
+    #  uses: actions/upload-artifact@v1.0.0
+    #  with:
+    #    name: Web
+    #    path: src/MusicStore/MusicStore.Web/bin/Release/netcoreapp3.1/
+    
+    - name: Azure Login
+      uses: Azure/login@v1
       with:
-        name: Web
-        path: src/MusicStore/MusicStore.Web/bin/Release/netcoreapp3.1/
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+    
+    - name: Azure WebApp Deploy
+      uses: Azure/webapps-deploy@v2
+      with:
+        app-name: music-store-gh
+        package: src/MusicStore/MusicStore.Web/bin/Release/netcoreapp3.1/
+          
+      
