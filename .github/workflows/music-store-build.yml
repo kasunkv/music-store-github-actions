@@ -29,4 +29,4 @@ jobs:
       uses: actions/upload-artifact@v1.0.0
       with:
         name: Web
-        path: $GITHUB_WORKSPACE/src/MusicStore/MusicStore.Web/bin/Release/netcoreapp3.1/
+        path: /src/MusicStore/MusicStore.Web/bin/Release/netcoreapp3.1/
