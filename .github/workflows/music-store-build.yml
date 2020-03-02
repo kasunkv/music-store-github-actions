@@ -2,26 +2,47 @@ name: Music Store Build
 
 on:
   push:
-    branches: 
-      - release/*
+    branches-ignore:
+      - '**'
   pull_request:
-    branches:
-      - master
-      - release/*  
+    branches-ignore:
+      - '**'
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout Code
       uses: actions/checkout@v2
+      
     - name: Setup .NET Core 3.1.102
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.102
+        
     - name: Build with dotnet
       run: dotnet build src/MusicStore/MusicStore.Web/*.csproj --configuration Release
+    
     - name: Run Unit Tests
       run: dotnet test src/MusicStore/UnitTests/MusicStore.Services.Tests/MusicStore.Services.Tests.csproj
+      
+    - name: Publish Web App
+      run: dotnet publish src/MusicStore/MusicStore.Web/*.csproj --configuration Release --verbosity detailed --output src/artifact/
+    
+    #- name: Upload artifact
+    #  uses: actions/upload-artifact@v1.0.0
+    #  with:
+    #    name: Web
+    #    path: src/MusicStore/MusicStore.Web/bin/Release/netcoreapp3.1/
+    
+    - name: Azure Login
+      uses: Azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+    
+    - name: Azure WebApp Deploy
+      uses: Azure/webapps-deploy@v2
+      with:
+        app-name: music-store-gh
+        package: src/artifact/

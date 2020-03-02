@@ -1,0 +1,25 @@
+name: Music Store Deployment
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Publish Web App
+        run: dotnet publish src/MusicStore/MusicStore.Web/*.csproj --configuration Release --output src/artifact/
+      
+      - name: Login to Azure
+        uses: Azure/login@v1
+        with:
+            creds: ${{ secrets.AZURE_CREDENTIALS }}
+      
+      - name: Deploy Web App
+        uses: Azure/webapp-deploy@v2
+        with:
+          app-name: music-store-gh
+          package: src/artifact/
