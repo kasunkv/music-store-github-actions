@@ -24,9 +24,9 @@ jobs:
           dotnet-version: 3.1.102
       
       - name: Build Project
-        run: dotnet build $GITHUB_WORKSPACE/src/MusicStore/MusicStore.Web/*.csproj --configuration Release
+        run: dotnet build src/MusicStore/MusicStore.Web/MusicStore.Web.csproj --configuration Release
 
       - name: Run Unit Tests
-        run: dotnet test $GITHUB_WORKSPACE/src/MusicStore/UnitTests/MusicStore.Services.Tests/MusicStore.Services.Tests.csproj
+        run: dotnet test src/MusicStore/UnitTests/MusicStore.Services.Tests/MusicStore.Services.Tests.csproj
 
       
