@@ -10,8 +10,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
       - name: Publish Web App
-        run: dotnet publish src/MusicStore/MusicStore.Web/*.csproj --configuration Release --output src/artifact/
+        run: dotnet publish src/MusicStore/MusicStore.Web/MusicStore.Web.csproj --configuration Release --output src/artifact/
       
       - name: Login to Azure
         uses: Azure/login@v1
@@ -19,7 +22,7 @@ jobs:
             creds: ${{ secrets.AZURE_CREDENTIALS }}
       
       - name: Deploy Web App
-        uses: Azure/webapp-deploy@v2
+        uses: Azure/webapps-deploy@v2
         with:
           app-name: music-store-gh
           package: src/artifact/
