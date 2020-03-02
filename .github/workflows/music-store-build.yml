@@ -3,11 +3,10 @@ name: Music Store Build
 on:
   push:
     branches-ignore:
-      - release/*
+      - '**'
   pull_request:
     branches-ignore:
-      - master
-      - release/*  
+      - '**'
 
 jobs:
   build:
